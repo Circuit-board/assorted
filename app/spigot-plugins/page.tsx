@@ -1,16 +1,49 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import SideBar from "../sidebar";
 import styles from "../page.module.css";
+import { getDownloads } from "../downloads";
+
+const resourceIds = {
+  decorativeNpc: 123305,
+  registryRegister: 127680,
+  circuitCars: 126019,
+  dancingGiants: 124326,
+};
 
 export default function Home() {
+  const [downloads, setDownloads] = useState({
+    decorativeNpc: 0,
+    registryRegister: 0,
+    circuitCars: 0,
+    dancingGiants: 0,
+  });
+
+  useEffect(() => {
+    async function fetchDownloads() {
+      const decorativeNpc = await getDownloads(resourceIds.decorativeNpc);
+      const registryRegister = await getDownloads(resourceIds.registryRegister);
+      const circuitCars = await getDownloads(resourceIds.circuitCars);
+      const dancingGiants = await getDownloads(resourceIds.dancingGiants);
+
+      setDownloads({
+        decorativeNpc,
+        registryRegister,
+        circuitCars,
+        dancingGiants,
+      });
+    }
+
+    fetchDownloads();
+  }, []);
+
   return (
     <div className={styles.page}>
       <SideBar />
       <main className={styles.main}>
         <h1 style={{ fontSize: 22 }}>
-          Welcome to the <code className={styles.code}>Spigot Plugins</code>{" "}
-          page!
+          Welcome to the <code className={styles.code}>Spigot Plugins</code> page!
         </h1>
         <h2 style={{ fontSize: 17 }}>
           Here are some of my <code className={styles.code}>cool</code> plugins!
@@ -24,6 +57,8 @@ export default function Home() {
           className={styles.button}
         >
           Decorative NPCs
+          <br />
+          Downloads: {downloads.decorativeNpc.toLocaleString()}
         </button>
 
         <button
@@ -34,6 +69,8 @@ export default function Home() {
           className={styles.button}
         >
           Registry Register
+          <br />
+          Downloads: {downloads.registryRegister.toLocaleString()}
         </button>
 
         <button
@@ -43,7 +80,9 @@ export default function Home() {
           }
           className={styles.button}
         >
-          Circuit cars ($1.99)
+          Circuit Cars ($1.99)
+          <br />
+          Downloads: {downloads.circuitCars.toLocaleString()}
         </button>
 
         <button
@@ -54,6 +93,8 @@ export default function Home() {
           className={styles.button}
         >
           Dancing Giants ($1.99)
+          <br />
+          Downloads: {downloads.dancingGiants.toLocaleString()}
         </button>
       </main>
     </div>

@@ -12,7 +12,7 @@ export default function SideBar() {
         alignItems: "center",
         height: "80vh",
         width: 200,
-        border: "1px solid black",
+        border: "5px solid #f98600",
         left: 10,
         backgroundColor: "#fff",
         gap: 10,
@@ -38,6 +38,13 @@ export default function SideBar() {
         className={styles.button}
       >
         Spigot Tutorials
+      </button>
+
+      <button
+        onClick={() => (window.location.href = "/spigot")}
+        className={styles.button}
+      >
+        Spigot
       </button>
 
       <button
